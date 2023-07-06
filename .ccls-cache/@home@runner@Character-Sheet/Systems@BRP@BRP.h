@@ -1,4 +1,5 @@
-#include "../../menus.h"
+#pragma once
+#include "../../diceroller.h"
 
 int ThreeDSix();
 int TwoDSixPlusSix();

@@ -1,4 +1,5 @@
 #include "menus.h"
+#include "diceroller.h"
 
 
 //RandomSetUp class functions
