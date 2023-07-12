@@ -9,25 +9,28 @@ int TwoDSixPlusSix();
 class BRP_human_base
 {
 public:
+  BRP_human_base(int a, int b, int c, int d, int e, int x, int y);
+
   int STR;
   int CON;
   int POW;
   int DEX;
-  int CHA;
   int INT;
   int SIZ;
-  BRP_human_base(int a, int b, int c, int d, int e, int x, int y);
-  int MOV;
+  int CHA;
+  std::string PN;
+
+  int CharacteristicRoll(int r);
   int Age();
-  int CharacteristicRoll();
-  int DamageBonus();
+  std::string DamageBonus(); //change this to void
   int HitPoints();
   int MajorWounds();
   int ProSkillPointsPool();
   int PerSkillPonitsPool();
 
-  std::string CharName;
-  std::string PlayerName;
+  std::string CharName();
+  void PlayerName();
+
 
   void fullrandom();
   };

@@ -5,8 +5,11 @@
 RandomSetUp SEEDER;
 Dice ROLL;
 
+
 int main() 
 {//All menus
+
+  //Inputs for menus
   int mainMenuInput;
   int optionsMenuInput;
   int diceMenuInput;
@@ -37,8 +40,9 @@ int main()
           std::cout << "\n\n<>----------<>----------<>----------<>\n";
           std::cout << "\t\t\tNew Sheet Menu\n";
           std::cout << "New Sheet not availible\n\n";
-          std::cout << "1. DOJO [2d6+6]\n\n";
+          std::cout << "1. DOJO [Make 5 random BRP chars]\n\n";
           std::cout << "2. DOJO [3d6]\n\n";
+          std::cout << "3. DOJO [make random BRP char rolls]\n";
           std::cout << "\n0. Return to Main Menu\n";
           std::cout << "<>----------<>----------<>----------<>\n\n";
 
@@ -47,9 +51,11 @@ int main()
           switch(newMenuInput)
           {//New Sheet menu input start
             case 1://temp for testing
-              for (int i = 0; i < 20; i++)
+              BRP_human_base PlayerName();
+              for (int i = 0; i < 5; i++)
               {
-               std::cout << TwoDSixPlusSix() << std::endl; 
+               BRP_human_base BRPChar0(ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),TwoDSixPlusSix(),TwoDSixPlusSix());
+              BRPChar0.fullrandom(); 
               }
               break;
             case 2://temp for testing
@@ -58,7 +64,15 @@ int main()
                std::cout << ThreeDSix() << std::endl; 
               }
               break;
+            case 3://temp for testing
+              {
+                BRP_human_base BRPChar0(ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),TwoDSixPlusSix(),TwoDSixPlusSix());
+                BRPChar0.PlayerName();
+                BRPChar0.fullrandom();
+              break;
+              }
             default:
+              std::cout << "Please enter one of the listed options";
               break;
           }//New Sheet menu input end
           if (newMenuInput == 0) break;
