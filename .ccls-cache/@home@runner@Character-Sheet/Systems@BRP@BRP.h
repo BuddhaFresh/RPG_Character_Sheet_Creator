@@ -19,16 +19,18 @@ public:
   int SIZ;
   int CHA;
   std::string PN;
+  std::string CN;
 
   int CharacteristicRoll(int r);
   int Age();
   std::string DamageBonus(); //change this to void
   int HitPoints();
   int MajorWounds();
+  std::string DistinctiveFeatures();
   int ProSkillPointsPool();
   int PerSkillPonitsPool();
 
-  std::string CharName();
+  void CharName();
   void PlayerName();
 
 

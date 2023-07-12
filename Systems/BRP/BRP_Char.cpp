@@ -105,6 +105,48 @@ int BRP_human_base::MajorWounds()
   return MW;
 }
 
+std::string BRP_human_base::DistinctiveFeatures()
+{
+  int DFs;
+  std::string W;
+  std::string UnitedFeatures;
+
+  if (CHA <= 3) {DFs = 4;}
+  else if (CHA >= 4 && CHA <= 7) {DFs = 3;}
+  else if (CHA >= 8 && CHA <= 9) {DFs = 2;}
+  else if (CHA >= 10 && CHA <= 11) {DFs = 1;}
+  else if (CHA >= 12 && CHA <= 14) {DFs = 2;}
+  else if (CHA >= 15 && CHA <= 16) {DFs = 3;}
+  else if (CHA >= 17) {DFs = 4;}
+  else {DFs = 0;} 
+
+  std::map<int, std::string> FeatureTypeTable;
+  FeatureTypeTable[0] = "Error";
+  FeatureTypeTable[1] = "Hair on head";
+  FeatureTypeTable[2] = "Facial hair";
+  FeatureTypeTable[3] = "Facial feature";
+  FeatureTypeTable[4] = "Expression";
+  FeatureTypeTable[5] = "Clothes";
+  FeatureTypeTable[6] = "Bearing";
+  FeatureTypeTable[7] = "Speech";
+  FeatureTypeTable[8] = "Arms and legs";
+  FeatureTypeTable[9] = "Torso";
+  FeatureTypeTable[10] = "Legs and feet";
+
+  for (int i = 0; i < DFs; i++) //need to find logic to have two items seperated by 'and' and three plus items seperated by ',' and 'and' while ending in ''
+  {
+    int Q = PLAY.Dten();
+    if (DFs == 2) {W = (i > 0) ? "": " and ";}
+    else if (DFs == 3) {W = (i > 0) ? "": " and ";}
+    else {W = "";} //DFs == 1
+    //std::string W = (i >= 1) ? "": " and ";
+    std::string WIP = FeatureTypeTable[Q] + W;
+    UnitedFeatures += WIP;
+  }
+
+  return UnitedFeatures;
+}
+
 int BRP_human_base::ProSkillPointsPool()
 {
   return 250; //default for nomral game, need to have options
@@ -116,29 +158,31 @@ int BRP_human_base::PerSkillPonitsPool()
   return PPP;
 }
 
-// std::string BRP_human_base::CharName()
-// {
-//   std::string CN = std::cin << "What is the character's name?\n";
-// }
+void BRP_human_base::CharName()
+{
+  std::cout << "\nWhat is the character's name?\n";
+  std::cin >> CN; 
+}
 
 void BRP_human_base::PlayerName()
 {
-  std::cout << "What is your name?\n";
+  std::cout << "\nWhat is your name?\n";
   std::cin >> PN;
 }
 
 void BRP_human_base::fullrandom()
 {
-  //PlayerName();
+  CharName();
   std::cout << "\n" << std::endl;
-  std::cout << "Name: " << "\t\t" << "Player: " << PN << std::endl;
+  std::cout << "Name: " << CN << "\t\t" << "Player: " << PN << std::endl;
   std::cout << "Age: " << Age() << std::endl;
   std::cout << "STR " << STR << "\t" << CharacteristicRoll(STR) << "%\t\t" << "SIZ " << SIZ << "\t" << CharacteristicRoll(SIZ) << "%" << std::endl;
   std::cout << "CON " << CON << "\t" << CharacteristicRoll(CON) << "%\t\t" << "CHA " << CHA << "\t" << CharacteristicRoll(CHA) << "%" << std::endl;
   std::cout << "DEX " << DEX << "\t" << CharacteristicRoll(DEX) << "%\t\t" << "INT " << INT << "\t" << CharacteristicRoll(INT) << "%" << std::endl;  
   std::cout << "POW " << POW << "\t" << std::endl;
   std::cout << "HP: " << HitPoints() << " with Major Would occuring at " << MajorWounds() << " HP" << std::endl;
-  std::cout << "Damage Bonus is: " << DamageBonus() << std::endl;
+  std::cout << "Damage Bonus of " << DamageBonus() << std::endl;
   std::cout << "Professional Skill Points Pool: "  << ProSkillPointsPool() << std::endl;
   std::cout << "Personal Skill Points Pool: "  << PerSkillPonitsPool() << std::endl;
-}
+  std::cout << "\nThey have distintive " << DistinctiveFeatures() << "." <<std::endl;
+} //maybe after fullrandom ask if user wishes to save and then ask for char name, can make text doc with the saved info.

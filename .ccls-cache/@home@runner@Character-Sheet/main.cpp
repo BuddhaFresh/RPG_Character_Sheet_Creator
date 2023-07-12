@@ -31,6 +31,7 @@ int main()
 
     std::cout << "Please Enter Your Command\n";
     std::cin >> mainMenuInput;
+    
 
     switch (mainMenuInput)
     {//Main menu input start    
@@ -51,7 +52,6 @@ int main()
           switch(newMenuInput)
           {//New Sheet menu input start
             case 1://temp for testing
-              BRP_human_base PlayerName();
               for (int i = 0; i < 5; i++)
               {
                BRP_human_base BRPChar0(ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),TwoDSixPlusSix(),TwoDSixPlusSix());
