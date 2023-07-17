@@ -1,7 +1,9 @@
 #include "../../menus.h"
+#include "../../diceroller.h"
 #include "BRP.h"
 #include <map>
 #include <math.h>
+
 
 //GOAL FOR SCRIPT
 //everything needed to make a standard Basic Role-Playing Character
@@ -10,8 +12,21 @@
 
 
 //Classes
+//RandomSetUp CALL;
 Dice PLAY;
 
+
+//Create folder for character sheets
+void FolderOriginBRP()
+{
+  std::string foldername = "Characters/BRP";
+  int result = mkdir(foldername.c_str(), 0777); //0777 is premissions for the folder, 7 is full permission and the three number posistions at the end are for different kinds of users? 
+  if (result == 0) 
+  {
+    std::cout << "BRP Installed\n";
+  }
+  else {  }
+}
 
 //Special Dice Rolls for this system
 //Rolls a 3D6, 3 six-sided dice added together
@@ -55,6 +70,7 @@ int BRP_human_base::CharacteristicRoll(int r)
   return CharRoll;
 }
 
+//Will need to expand to allow input from user and modifiers for higher and lower ages
 int BRP_human_base::Age()
 {
   int age = 17+PLAY.Dsix();
@@ -74,7 +90,7 @@ std::string BRP_human_base::DamageBonus()
   DamageModifierTable[5] = "+1D6";
   DamageModifierTable[6] = "+2D6";
   DamageModifierTable[7] = "+3D6";
-  DamageModifierTable[8] = "Ea. +16"; //need to edit later
+  DamageModifierTable[8] = "Ea. +16"; //need to edit result 8, adding 1d6 for every 16th value above 73 (double check the book)
 
   int DMT;
   
@@ -95,13 +111,13 @@ std::string BRP_human_base::DamageBonus()
 
 int BRP_human_base::HitPoints()
 {
-  int HP = (CON + SIZ)/2;
+  int HP = (CON + SIZ)/2; //round up?
   return HP;
 }
 
 int BRP_human_base::MajorWounds()
 {
-  int MW = ceil(HitPoints()/2);
+  int MW = ceil(HitPoints()/2); //ceil rounds up
   return MW;
 }
 
@@ -133,7 +149,8 @@ std::string BRP_human_base::DistinctiveFeatures()
   FeatureTypeTable[9] = "Torso";
   FeatureTypeTable[10] = "Legs and feet";
 
-  for (int i = 0; i < DFs; i++) //need to find logic to have two items seperated by 'and' and three plus items seperated by ',' and 'and' while ending in ''
+  //need to find logic to have two items seperated by 'and' and three plus items seperated by ',' and 'and' while ending in ''
+  for (int i = 0; i < DFs; i++) 
   {
     int Q = PLAY.Dten();
     if (DFs == 2) {W = (i > 0) ? "": " and ";}
@@ -170,19 +187,43 @@ void BRP_human_base::PlayerName()
   std::cin >> PN;
 }
 
-void BRP_human_base::fullrandom()
+
+
+void BRP_human_base::fullrandom(RandomSetUp& WOW)
 {
   CharName();
   std::cout << "\n" << std::endl;
   std::cout << "Name: " << CN << "\t\t" << "Player: " << PN << std::endl;
   std::cout << "Age: " << Age() << std::endl;
-  std::cout << "STR " << STR << "\t" << CharacteristicRoll(STR) << "%\t\t" << "SIZ " << SIZ << "\t" << CharacteristicRoll(SIZ) << "%" << std::endl;
-  std::cout << "CON " << CON << "\t" << CharacteristicRoll(CON) << "%\t\t" << "CHA " << CHA << "\t" << CharacteristicRoll(CHA) << "%" << std::endl;
-  std::cout << "DEX " << DEX << "\t" << CharacteristicRoll(DEX) << "%\t\t" << "INT " << INT << "\t" << CharacteristicRoll(INT) << "%" << std::endl;  
-  std::cout << "POW " << POW << "\t" << std::endl;
+  std::cout << "STR " << STR << "\t" << "Effort roll " << CharacteristicRoll(STR) << "%\t\t\t" << "INT " << INT << "\t" << "Idea roll " << CharacteristicRoll(INT) << "%" << std::endl; 
+  std::cout << "CON " << CON << "\t" << "Stamina roll " << CharacteristicRoll(CON) << "%\t\t" << "CHA " << CHA << "\t" << "Charm roll " << CharacteristicRoll(CHA) << "%" << std::endl;
+  std::cout << "DEX " << DEX << "\t" << "Agility roll " << CharacteristicRoll(DEX) << "%\t\t" << "POW " << POW << "\t" << "Luck roll " << CharacteristicRoll(POW) << "%" << std::endl;  
+  std::cout << "SIZ " << SIZ << std::endl;
   std::cout << "HP: " << HitPoints() << " with Major Would occuring at " << MajorWounds() << " HP" << std::endl;
   std::cout << "Damage Bonus of " << DamageBonus() << std::endl;
   std::cout << "Professional Skill Points Pool: "  << ProSkillPointsPool() << std::endl;
   std::cout << "Personal Skill Points Pool: "  << PerSkillPonitsPool() << std::endl;
   std::cout << "\nThey have distintive " << DistinctiveFeatures() << "." <<std::endl;
-} //maybe after fullrandom ask if user wishes to save and then ask for char name, can make text doc with the saved info.
+  std::cout << "\n\nSeed: " << WOW.currentSeed;
+  printChar(); 
+} 
+
+void BRP_human_base::printChar()
+{
+  std::ofstream BRPText("Characters/BRP/test.txt");
+  
+  BRPText << "Name: " << CN << "\t\t" << "Player: " << PN << std::endl;
+  BRPText << "Age: " << Age() << std::endl;
+  BRPText << "STR " << STR << "\t" << "Effort roll " << CharacteristicRoll(STR) << "%\t\t\t" << "INT " << INT << "\t" << "Idea roll " << CharacteristicRoll(INT) << "%" << std::endl; 
+  BRPText << "CON " << CON << "\t" << "Stamina roll " << CharacteristicRoll(CON) << "%\t\t" << "CHA " << CHA << "\t" << "Charm roll " << CharacteristicRoll(CHA) << "%" << std::endl;
+  BRPText << "DEX " << DEX << "\t" << "Agility roll " << CharacteristicRoll(DEX) << "%\t\t" << "POW " << POW << "\t" << "Luck roll " << CharacteristicRoll(POW) << "%" << std::endl;  
+  BRPText << "SIZ " << SIZ << std::endl;
+  BRPText << "HP: " << HitPoints() << " with Major Would occuring at " << MajorWounds() << " HP" << std::endl;
+  BRPText << "Damage Bonus of " << DamageBonus() << std::endl;
+  BRPText << "Professional Skill Points Pool: "  << ProSkillPointsPool() << std::endl;
+  BRPText << "Personal Skill Points Pool: "  << PerSkillPonitsPool() << std::endl;
+  BRPText << "\nThey have distintive " << DistinctiveFeatures() << "." <<std::endl;
+  
+  BRPText.close();
+}
+//maybe after fullrandom ask if user wishes to save and then ask for char name, can make text doc with the saved info.

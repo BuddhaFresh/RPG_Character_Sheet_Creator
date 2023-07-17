@@ -1,5 +1,6 @@
 #include "menus.h"
 #include "Systems/BRP/BRP.h"
+#include "diceroller.h"
 
 //Classes
 RandomSetUp SEEDER;
@@ -17,6 +18,9 @@ int main()
 
   //Generate a new seed at boot
   SEEDER.randomSeed();
+
+  //Makes a new folder in Characters for any added System
+  FolderOriginBRP();
 
   while(true) 
   {//MAIN MENU
@@ -55,7 +59,7 @@ int main()
               for (int i = 0; i < 5; i++)
               {
                BRP_human_base BRPChar0(ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),TwoDSixPlusSix(),TwoDSixPlusSix());
-              BRPChar0.fullrandom(); 
+              BRPChar0.fullrandom(SEEDER); 
               }
               break;
             case 2://temp for testing
@@ -68,7 +72,7 @@ int main()
               {
                 BRP_human_base BRPChar0(ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),TwoDSixPlusSix(),TwoDSixPlusSix());
                 BRPChar0.PlayerName();
-                BRPChar0.fullrandom();
+                BRPChar0.fullrandom(SEEDER);
               break;
               }
             default:

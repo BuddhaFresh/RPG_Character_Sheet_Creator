@@ -6,7 +6,7 @@
 void RandomSetUp::randomSeed() 
 {
   currentSeed = time(NULL);
-  srand(time(NULL));
+  srand(currentSeed);
 }
 
 void RandomSetUp::userSeed()
@@ -15,14 +15,13 @@ void RandomSetUp::userSeed()
   std::cout << "\nEnter seed\n";
   std::cin >> seedinput;
 
-  // Use std::hash to convert the input string into an integer
-  std::hash<std::string> strtohash;
-  int seed = static_cast<int>(strtohash(seedinput));
-  currentSeed = seed;
+  //Turn string into int
+  currentSeed = std::stoi(seedinput);
 
   // Providing the custom seed value
-  srand(seed);
+  srand(currentSeed);
 }
+
 
 //Dice class functions
 int Dice::Dfour()

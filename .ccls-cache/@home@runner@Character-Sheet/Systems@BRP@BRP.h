@@ -1,6 +1,8 @@
 #pragma once
 #include "../../diceroller.h"
+#include "../../menus.h"
 
+void FolderOriginBRP();
 int ThreeDSix();
 int TwoDSixPlusSix();
 
@@ -23,7 +25,7 @@ public:
 
   int CharacteristicRoll(int r);
   int Age();
-  std::string DamageBonus(); //change this to void
+  std::string DamageBonus();
   int HitPoints();
   int MajorWounds();
   std::string DistinctiveFeatures();
@@ -33,6 +35,6 @@ public:
   void CharName();
   void PlayerName();
 
-
-  void fullrandom();
+  void printChar();
+  void fullrandom(RandomSetUp& WOW);
   };
