@@ -73,8 +73,8 @@ int BRP_human_base::CharacteristicRoll(int r)
 //Will need to expand to allow input from user and modifiers for higher and lower ages
 int BRP_human_base::Age()
 {
-  int age = 17+PLAY.Dsix();
-  return age;
+  int startage = 17+PLAY.Dsix();
+  return startage;
 }
 
 std::string BRP_human_base::DamageBonus()
@@ -111,13 +111,13 @@ std::string BRP_human_base::DamageBonus()
 
 int BRP_human_base::HitPoints()
 {
-  int HP = (CON + SIZ)/2; //round up?
+  int HP = ceil((CON + SIZ)/2); 
   return HP;
 }
 
 int BRP_human_base::MajorWounds()
 {
-  int MW = ceil(HitPoints()/2); //ceil rounds up
+  int MW = ceil(HitPoints()/2);
   return MW;
 }
 
@@ -187,13 +187,34 @@ void BRP_human_base::PlayerName()
   std::cin >> PN;
 }
 
-
+void BRP_human_base::printChar(RandomSetUp& WOW)
+{
+  std::string BRPFilePath = "Characters/BRP/";
+  
+  std::string BRPCharName = BRPFilePath + CN + "_by_" + PN + ".txt";
+  
+  std::ofstream BRPText(BRPCharName);
+  
+  BRPText << "Name: " << CN << "\t\t" << "Player: " << PN << std::endl;
+  BRPText << "Age: " << Age() << "\t\t" << "MOV: " << 10 << std::endl;
+  BRPText << "Profession: " << "tbd" << std::endl;
+  BRPText << "STR " << STR << "\t" << "Effort roll " << CharacteristicRoll(STR) << "%\t\t\t" << "INT " << INT << "\t" << "Idea roll " << CharacteristicRoll(INT) << "%" << std::endl; 
+  BRPText << "CON " << CON << "\t" << "Stamina roll " << CharacteristicRoll(CON) << "%\t\t" << "CHA " << CHA << "\t" << "Charm roll " << CharacteristicRoll(CHA) << "%" << std::endl;
+  BRPText << "DEX " << DEX << "\t" << "Agility roll " << CharacteristicRoll(DEX) << "%\t\t" << "POW " << POW << "\t" << "Luck roll " << CharacteristicRoll(POW) << "%" << std::endl;  
+  BRPText << "SIZ " << SIZ << std::endl;
+  BRPText << "HP: " << HitPoints() << " with Major Would occuring at " << MajorWounds() << " HP" << std::endl;
+  BRPText << "Damage Bonus of " << DamageBonus() << std::endl;
+  BRPText << "Professional Skill Points Pool: "  << ProSkillPointsPool() << std::endl;
+  BRPText << "Personal Skill Points Pool: "  << PerSkillPonitsPool() << std::endl;
+  BRPText << "\nThey have distintive " << DistinctiveFeatures() << "." <<std::endl;
+  BRPText << "\n\nSeed: " << WOW.currentSeed;
+  
+  BRPText.close();
+}
 
 void BRP_human_base::fullrandom(RandomSetUp& WOW)
 {
-  CharName();
   std::cout << "\n" << std::endl;
-  std::cout << "Name: " << CN << "\t\t" << "Player: " << PN << std::endl;
   std::cout << "Age: " << Age() << std::endl;
   std::cout << "STR " << STR << "\t" << "Effort roll " << CharacteristicRoll(STR) << "%\t\t\t" << "INT " << INT << "\t" << "Idea roll " << CharacteristicRoll(INT) << "%" << std::endl; 
   std::cout << "CON " << CON << "\t" << "Stamina roll " << CharacteristicRoll(CON) << "%\t\t" << "CHA " << CHA << "\t" << "Charm roll " << CharacteristicRoll(CHA) << "%" << std::endl;
@@ -205,25 +226,4 @@ void BRP_human_base::fullrandom(RandomSetUp& WOW)
   std::cout << "Personal Skill Points Pool: "  << PerSkillPonitsPool() << std::endl;
   std::cout << "\nThey have distintive " << DistinctiveFeatures() << "." <<std::endl;
   std::cout << "\n\nSeed: " << WOW.currentSeed;
-  printChar(); 
 } 
-
-void BRP_human_base::printChar()
-{
-  std::ofstream BRPText("Characters/BRP/test.txt");
-  
-  BRPText << "Name: " << CN << "\t\t" << "Player: " << PN << std::endl;
-  BRPText << "Age: " << Age() << std::endl;
-  BRPText << "STR " << STR << "\t" << "Effort roll " << CharacteristicRoll(STR) << "%\t\t\t" << "INT " << INT << "\t" << "Idea roll " << CharacteristicRoll(INT) << "%" << std::endl; 
-  BRPText << "CON " << CON << "\t" << "Stamina roll " << CharacteristicRoll(CON) << "%\t\t" << "CHA " << CHA << "\t" << "Charm roll " << CharacteristicRoll(CHA) << "%" << std::endl;
-  BRPText << "DEX " << DEX << "\t" << "Agility roll " << CharacteristicRoll(DEX) << "%\t\t" << "POW " << POW << "\t" << "Luck roll " << CharacteristicRoll(POW) << "%" << std::endl;  
-  BRPText << "SIZ " << SIZ << std::endl;
-  BRPText << "HP: " << HitPoints() << " with Major Would occuring at " << MajorWounds() << " HP" << std::endl;
-  BRPText << "Damage Bonus of " << DamageBonus() << std::endl;
-  BRPText << "Professional Skill Points Pool: "  << ProSkillPointsPool() << std::endl;
-  BRPText << "Personal Skill Points Pool: "  << PerSkillPonitsPool() << std::endl;
-  BRPText << "\nThey have distintive " << DistinctiveFeatures() << "." <<std::endl;
-  
-  BRPText.close();
-}
-//maybe after fullrandom ask if user wishes to save and then ask for char name, can make text doc with the saved info.

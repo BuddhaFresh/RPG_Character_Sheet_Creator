@@ -35,6 +35,6 @@ public:
   void CharName();
   void PlayerName();
 
-  void printChar();
+  void printChar(RandomSetUp& WOW);
   void fullrandom(RandomSetUp& WOW);
   };

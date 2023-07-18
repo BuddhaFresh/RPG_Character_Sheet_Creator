@@ -15,6 +15,7 @@ int main()
   int optionsMenuInput;
   int diceMenuInput;
   int newMenuInput;
+  int charKeep;
 
   //Generate a new seed at boot
   SEEDER.randomSeed();
@@ -69,12 +70,40 @@ int main()
               }
               break;
             case 3://temp for testing
-              {
+              {//case 3
                 BRP_human_base BRPChar0(ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),ThreeDSix(),TwoDSixPlusSix(),TwoDSixPlusSix());
                 BRPChar0.PlayerName();
                 BRPChar0.fullrandom(SEEDER);
+                
+                while(true)
+                {//save character menu
+                  std::cout << "\n\n<>##########<>##########<>##########<>\n";
+                  std::cout << "\t\tSave this charcater?" << std::endl;
+                  std::cout << "1. Save as txt file" << std::endl;
+                  std::cout << "\n0. Return" << std::endl;
+                  std::cout << "<>##########<>##########<>##########<>\n\n";
+                  std::cin >> charKeep;
+                  
+                  switch(charKeep)
+                  {//save character input
+                    case 1:
+                      BRPChar0.CharName();
+                      BRPChar0.printChar(SEEDER);
+                      break;
+                    case 0:
+                      break;
+                    default:
+                      std::cout << "\nNot one of the options";
+                      break;
+                  }//save character input end
+                  
+                  if (charKeep == 0 || charKeep == 1) break;
+                  
+                }//save character menu end
+                
               break;
-              }
+                
+              }//case 3 end
             default:
               std::cout << "Please enter one of the listed options";
               break;
