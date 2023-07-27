@@ -1,8 +1,7 @@
 #include "../../menus.h"
 #include "../../diceroller.h"
 #include "BRP.h"
-#include <map>
-#include <math.h>
+
 
 
 //GOAL FOR SCRIPT
@@ -51,6 +50,70 @@ int TwoDSixPlusSix()
   return x+6;
 }
 
+//Profession Wealth System
+//Section for Profession Data Map to determine Profession wealth
+struct WealthLevel 
+{
+  std::string level;
+  int weight;
+};
+
+struct ProfessionData 
+{
+  std::string professionName;
+  std::vector<WealthLevel> wealthLevels;
+};
+
+std::map<std::string, ProfessionData> professionDataMap;
+
+//Number after Wealth Level is the weight when determines chance to be at that level
+void initializeProfessionData() 
+{
+  professionDataMap["Artist"] = {"Artist", {{"Destitute", 1}, {"Poor", 4}, {"Average", 5}, {"Affluent", 2}, {"Wealthy", 1}}};
+  professionDataMap["Assassin"] = {"Assassin", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Athlete"] = {"Athlete", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Beggar"] = {"Beggar", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Clerk"] = {"Clerk", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Computer Tech"] = {"Computer Tech", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Crafter"] = {"Crafter", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Criminal"] = {"Criminal", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Detective"] = {"Detective", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Doctor"] = {"Doctor", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Engineer"] = {"Engineer", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Entertainer"] = {"Entertainer", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Explorer"] = {"Explorer", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Farmer"] = {"Farmer", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Gambler"] = {"Gambler", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Herder"] = {"Herder", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Hunter"] = {"Hunter", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Journalist"] = {"Journalist", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Laborer"] = {"Laborer", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Lawkeeper"] = {"Lawkeeper", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Lawyer"] = {"Lawyer", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Mechanic"] = {"Mechanic", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Merchant"] = {"Merchant", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Noble"] = {"Noble", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Occultist"] = {"Occultist", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Pilot"] = {"Pilot", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Politician"] = {"Politician", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Priest"] = {"Priest", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Sailor"] = {"Sailor", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Scholar"] = {"Scholar", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Scientist"] = {"Scientist", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Servant"] = {"Servant", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Shaman"] = {"Shaman", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Slave"] = {"Slave", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Soldier"] = {"Soldier", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Spy"] = {"Spy", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Student"] = {"Student", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Teacher"] = {"Teacher", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Technician"] = {"Technician", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Thief"] = {"Thief", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Tribesperson"] = {"Tribesperson", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Warrior"] = {"Warrior", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+  professionDataMap["Wizard"] = {"Wizard", {{"Destitute", 0}, {"Poor", 0}, {"Average", 10}, {"Affluent", 0}, {"Wealthy", 0}}};
+}
+
 //BRP_human_base class
 //Constructor to hold Characteristics, 
 BRP_human_base::BRP_human_base(int a, int b, int c, int d, int e, int x, int y) 
@@ -71,10 +134,13 @@ int BRP_human_base::CharacteristicRoll(int r)
 }
 
 //Will need to expand to allow input from user and modifiers for higher and lower ages
-int BRP_human_base::Age()
+int BRP_human_base::Born()
 {
   int startage = 17+PLAY.Dsix();
-  return startage;
+
+  Age = startage;
+
+  return Age;
 }
 
 std::string BRP_human_base::DamageBonus()
@@ -104,20 +170,20 @@ std::string BRP_human_base::DamageBonus()
   else if (Db >= 73) {DMT = 8;}
   else {DMT = 0;}
 
-  std::string x = DamageModifierTable[DMT];
+  DamBonus = DamageModifierTable[DMT];
   
-  return x;
+  return DamBonus;
 }
 
 int BRP_human_base::HitPoints()
 {
-  int HP = ceil((CON + SIZ)/2); 
+  HP = ceil((CON + SIZ)/2); 
   return HP;
 }
 
 int BRP_human_base::MajorWounds()
 {
-  int MW = ceil(HitPoints()/2);
+  MW = ceil(HP/2);
   return MW;
 }
 
@@ -125,15 +191,13 @@ std::string BRP_human_base::DistinctiveFeatures()
 {
   int DFs;
   std::string W;
-  std::string UnitedFeatures;
 
-  if (CHA <= 3) {DFs = 4;}
+  if (CHA <= 3 || CHA >= 17) {DFs = 4;}
   else if (CHA >= 4 && CHA <= 7) {DFs = 3;}
   else if (CHA >= 8 && CHA <= 9) {DFs = 2;}
   else if (CHA >= 10 && CHA <= 11) {DFs = 1;}
   else if (CHA >= 12 && CHA <= 14) {DFs = 2;}
   else if (CHA >= 15 && CHA <= 16) {DFs = 3;}
-  else if (CHA >= 17) {DFs = 4;}
   else {DFs = 0;} 
 
   std::map<int, std::string> FeatureTypeTable;
@@ -166,7 +230,7 @@ std::string BRP_human_base::DistinctiveFeatures()
 
 int BRP_human_base::ProSkillPointsPool()
 {
-  return 250; //default for nomral game, need to have options
+  return 250; //default for nomral game, need to have options for other 
 }
 
 int BRP_human_base::PerSkillPonitsPool()
@@ -175,38 +239,142 @@ int BRP_human_base::PerSkillPonitsPool()
   return PPP;
 }
 
+void BRP_human_base::Professions()
+{
+  std::string jobs[44] = {"Artist", "Assassin", "Athlete", "Beggar", "Clerk", "Computer Tech", "Crafter", "Criminal", "Detective", "Doctor", "Engineer", "Entertainer", "Explorer", "Farmer", "Gambler", "Herder", "Hunter", "Journalist", "Laborer", "Lawkeeper", "Lawyer", "Mechanic", "Merchant", "Noble", "Occultist", "Pilot", "Politician", "Priest", "Sailor", "Scholar", "Scientist", "Servant", "Shaman", "Slave", "Soldier", "Spy", "Student", "Teacher", "Technician", "Thief", "Tribesperson", "Warrior", "Wizard", "Writer"};
+
+  int Hired = rand() % 44;
+
+  Profession = jobs[Hired];
+
+  std::string payscales[5] = {"Destitute", "Poor", "Average", "Affluent", "Wealthy"};
+ 
+  int Earned = rand() % 10;
+
+  Wealth = "Broke";
+  
+  // Get the wealth level ranges for the profession
+  std::vector<WealthLevel>wealthLevels = professionDataMap[Profession].wealthLevels;
+
+  // Calculate the total weight of all wealth levels for the profession
+  int totalWeight = 0;
+  for (auto wealthLevel : wealthLevels) 
+  {
+    totalWeight += wealthLevel.weight;
+  }
+
+  // Generate a random number between 0 and totalWeight - 1
+  int randomValue = rand() % totalWeight;
+
+  // Find the corresponding wealth level based on the random number and weights
+  int currentWeight = 0;
+  for (auto wealthLevel : wealthLevels) 
+  {
+    currentWeight += wealthLevel.weight;
+    if (randomValue < currentWeight) 
+    {
+      Wealth = wealthLevel.level;
+      break;
+    }
+  }
+}
+
+std::string BRP_human_base::RandGender()
+{
+  int X = PLAY.Donehundred();
+  std::string Z;
+
+  if (X >= 51) {Z = "Male";}
+  else {Z = "Female";}
+
+  Gender = Z;
+  
+  return Gender;
+}
+
+std::string BRP_human_base::HandDom()
+{
+  int Odds = PLAY.Donehundred();
+
+  if (Odds == 0) {Handedness = "Cross-Dominant";}
+  else if (Odds >= 97) {Handedness = "Ambidextrous";}
+  else if (Odds >= 1 && Odds <= 13) {Handedness = "Left-Handed";}
+  else {Handedness = "Right-Handed";}
+  
+  return Handedness;
+}
+
+void BRP_human_base::HeightandWeight()
+{
+  //2D-array of height and weight outcomes
+  std::string HTandWT[2][5] = 
+{
+  {"Tiny","Short","Average","Tall","Towering"},
+  {"Frail","Thin","Average","Overweight","Obese"}
+};
+
+  //poor if statement just to use the array. should adjust results based on CON and maybe random chance
+  if (SIZ >= 10 && SIZ <= 13) {Height = HTandWT[0][2], Weight = HTandWT[1][2];}
+  else if (SIZ < 10) {Height = HTandWT[0][1], Weight = HTandWT[1][1];}
+  else if (SIZ >= 14 && SIZ <= 17) {Height = HTandWT[0][3], Weight = HTandWT[1][3];}
+  else {Height = HTandWT[0][4], Weight = HTandWT[1][4];}
+}
+
+void BRP_human_base::Skills()
+{
+  //stores base skill values and changes them based on GM setting
+  
+}
+
 void BRP_human_base::CharName()
 {
   std::cout << "\nWhat is the character's name?\n";
-  std::cin >> CN; 
+  std::getline(std::cin >> std::ws, CN); 
 }
 
 void BRP_human_base::PlayerName()
 {
   std::cout << "\nWhat is your name?\n";
-  std::cin >> PN;
+  std::getline(std::cin >> std::ws, PN);
 }
 
 void BRP_human_base::printChar(RandomSetUp& WOW)
 {
   std::string BRPFilePath = "Characters/BRP/";
   
-  std::string BRPCharName = BRPFilePath + CN + "_by_" + PN + ".txt";
+  std::string BRPCharFileName = BRPFilePath + CN + "_by_" + PN + ".txt";
   
-  std::ofstream BRPText(BRPCharName);
-  
+  std::ofstream BRPText(BRPCharFileName,std::ofstream::out);
+
+  BRPText << "===========================================================" << std::endl;
+  BRPText << "\t\t\tPERSONAL" << std::endl;
+  BRPText << "===========================================================" << std::endl;
   BRPText << "Name: " << CN << "\t\t" << "Player: " << PN << std::endl;
-  BRPText << "Age: " << Age() << "\t\t" << "MOV: " << 10 << std::endl;
-  BRPText << "Profession: " << "tbd" << std::endl;
-  BRPText << "STR " << STR << "\t" << "Effort roll " << CharacteristicRoll(STR) << "%\t\t\t" << "INT " << INT << "\t" << "Idea roll " << CharacteristicRoll(INT) << "%" << std::endl; 
-  BRPText << "CON " << CON << "\t" << "Stamina roll " << CharacteristicRoll(CON) << "%\t\t" << "CHA " << CHA << "\t" << "Charm roll " << CharacteristicRoll(CHA) << "%" << std::endl;
-  BRPText << "DEX " << DEX << "\t" << "Agility roll " << CharacteristicRoll(DEX) << "%\t\t" << "POW " << POW << "\t" << "Luck roll " << CharacteristicRoll(POW) << "%" << std::endl;  
-  BRPText << "SIZ " << SIZ << std::endl;
-  BRPText << "HP: " << HitPoints() << " with Major Would occuring at " << MajorWounds() << " HP" << std::endl;
-  BRPText << "Damage Bonus of " << DamageBonus() << std::endl;
+  BRPText << "Culture: " << "Human" << "\t\t" << "Gender: " << Gender << std::endl;
+  BRPText << "Handedness: " << Handedness << "\t" << "Height: " << Height << "\t" << "Weight: " << Weight << std::endl;
+  BRPText << "Profession: " << Profession << "\t\t" << "Wealth: " << Wealth << std::endl;
+  BRPText << "Gods/Religion: " << "Agnostic" << std::endl;
+  BRPText << "\nThey have distintive " << UnitedFeatures << "." <<std::endl;
+  BRPText << "MOV: " << 10 << "\t\t" << "Age: " << Age << std::endl;
+  BRPText << "===========================================================" << std::endl;
+  BRPText << "\t\t\tCHARACTERISTICS" << std::endl;
+  BRPText << "===========================================================" << std::endl;
+  BRPText << "STR " << std::setw(2) << std::setfill('0') << STR << "\t" << "Effort roll " << CharacteristicRoll(STR) << "%\t\t\t" << "INT " << std::setw(2) << std::setfill('0') << INT << "\t" << "Idea roll " << CharacteristicRoll(INT) << "%" << std::endl; 
+  BRPText << "CON " << std::setw(2) << std::setfill('0') << CON << "\t" << "Stamina roll " << CharacteristicRoll(CON) << "%\t\t" << "CHA " << std::setw(2) << std::setfill('0') << CHA << "\t" << "Charm roll " << CharacteristicRoll(CHA) << "%" << std::endl;
+  BRPText << "DEX " << std::setw(2) << std::setfill('0') << DEX << "\t" << "Agility roll " << CharacteristicRoll(DEX) << "%\t\t" << "POW " << std::setw(2) << std::setfill('0') << POW << "\t" << "Luck roll " << CharacteristicRoll(POW) << "%" << std::endl;  
+  BRPText << "SIZ " << std::setw(2) << std::setfill('0') << SIZ << "\t\t\t\t\t" << "Damage Bonus of " << DamBonus << std::endl;
+  BRPText << "===========================================================" << std::endl;
+  BRPText << "\t\t\tHIT POINTS" << std::endl;
+  BRPText << "===========================================================" << std::endl;
+  BRPText << "HP: " << HP << " with Major Would occuring at " << MW << " HP" << std::endl;
+  BRPText << "===========================================================" << std::endl;
+  BRPText << "\t\t\tSKILLS" << std::endl;
+  BRPText << "===========================================================" << std::endl;
   BRPText << "Professional Skill Points Pool: "  << ProSkillPointsPool() << std::endl;
   BRPText << "Personal Skill Points Pool: "  << PerSkillPonitsPool() << std::endl;
-  BRPText << "\nThey have distintive " << DistinctiveFeatures() << "." <<std::endl;
+  BRPText << "COMMUNICATION"  << "\t\t\t" << "MENTAL"  << "\t\t\t" << "PHYSICAL"  << "\t\t\t" << std::endl;
+  BRPText << "MANIPULATION"  << "\t\t\t" << "PERCEPTION"  << "\t\t\t" << "COMBAT"  << "\t\t\t" << std::endl;
+  
   BRPText << "\n\nSeed: " << WOW.currentSeed;
   
   BRPText.close();
@@ -214,16 +382,27 @@ void BRP_human_base::printChar(RandomSetUp& WOW)
 
 void BRP_human_base::fullrandom(RandomSetUp& WOW)
 {
+  Born();
+  Professions();
+  RandGender();
+  HandDom();
+  HitPoints();
+  MajorWounds();
+  DamageBonus();
+  DistinctiveFeatures();
+  HeightandWeight();
   std::cout << "\n" << std::endl;
-  std::cout << "Age: " << Age() << std::endl;
+  std::cout << "Starting Age: " << Age << "\t" << "Works as a " << Wealth << " " << Profession << std::endl;
+  std::cout << "Gender: " << Gender << "\t" << "Handedness: " << Handedness << std::endl;
+  std::cout << "Height: " << Height << "\t" << "Weight: " << Weight << std::endl;
   std::cout << "STR " << STR << "\t" << "Effort roll " << CharacteristicRoll(STR) << "%\t\t\t" << "INT " << INT << "\t" << "Idea roll " << CharacteristicRoll(INT) << "%" << std::endl; 
   std::cout << "CON " << CON << "\t" << "Stamina roll " << CharacteristicRoll(CON) << "%\t\t" << "CHA " << CHA << "\t" << "Charm roll " << CharacteristicRoll(CHA) << "%" << std::endl;
   std::cout << "DEX " << DEX << "\t" << "Agility roll " << CharacteristicRoll(DEX) << "%\t\t" << "POW " << POW << "\t" << "Luck roll " << CharacteristicRoll(POW) << "%" << std::endl;  
   std::cout << "SIZ " << SIZ << std::endl;
-  std::cout << "HP: " << HitPoints() << " with Major Would occuring at " << MajorWounds() << " HP" << std::endl;
-  std::cout << "Damage Bonus of " << DamageBonus() << std::endl;
+  std::cout << "HP: " << HP << " with Major Would occuring at " << MW << " HP" << std::endl;
+  std::cout << "Damage Bonus of " << DamBonus << std::endl;
   std::cout << "Professional Skill Points Pool: "  << ProSkillPointsPool() << std::endl;
   std::cout << "Personal Skill Points Pool: "  << PerSkillPonitsPool() << std::endl;
-  std::cout << "\nThey have distintive " << DistinctiveFeatures() << "." <<std::endl;
+  std::cout << "\nThey have distintive " << UnitedFeatures << "." <<std::endl;
   std::cout << "\n\nSeed: " << WOW.currentSeed;
 } 

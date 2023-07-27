@@ -1,0 +1,32 @@
+===========================================================
+			PERSONAL
+===========================================================
+Name: Axel		Player: Forrest
+Culture: Human		Gender: Male
+Handedness: Right-Handed	Height: Tall	Weight: Overweight
+Profession: Wizard		Wealth: Broke
+Gods/Religion: Agnostic
+
+They have distintive Torso and SpeechHair on head.
+MOV: 10		Age: 21
+===========================================================
+			CHARACTERISTICS
+===========================================================
+STR 13	Effort roll 65%			INT 14	Idea roll 70%
+CON 09	Stamina roll 45%		CHA 15	Charm roll 75%
+DEX 07	Agility roll 35%		POW 14	Luck roll 70%
+SIZ 17					Damage Bonus of +1D4
+===========================================================
+			HIT POINTS
+===========================================================
+HP: 13 with Major Would occuring at 6 HP
+===========================================================
+			SKILLS
+===========================================================
+Professional Skill Points Pool: 250
+Personal Skill Points Pool: 140
+COMMUNICATION			MENTAL			PHYSICAL			
+MANIPULATION			PERCEPTION			COMBAT			
+
+
+Seed: 1690472558
