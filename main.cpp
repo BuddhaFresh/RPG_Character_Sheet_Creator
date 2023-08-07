@@ -2,6 +2,26 @@
 #include "Systems/BRP/BRP.h"
 #include "diceroller.h"
 
+
+//ROADMAP
+// 
+// 0. txt file version complete
+// 0.1 skills
+// 0.2 description
+// 0.3 page 2
+// 1. Move BRP Menus in BRP.cpp
+// 2. Load from txt file
+// 3. Able to edit a blank sheet (point buy and full custom edit)
+// 4. Able to edit randomized sheet
+// 5. Make a user defined multi-random character (txt) sheet generater
+// 5.1 Make each called random charcter generate a new seed
+// 6. basic windows GUI
+// 7. exe file installer
+// 8. PDF file output
+// 8.1 Fillable PDF file output
+// 
+
+
 //Classes
 RandomSetUp SEEDER;
 Dice ROLL;
@@ -10,22 +30,20 @@ Dice ROLL;
 int main() 
 {//All menus
 
+
+
+  
   //Inputs for menus
   int mainMenuInput;
-  std::unordered_set<int> approvedMainMenuInput = {0,1,2,3,4};
   int optionsMenuInput;
-  std::unordered_set<int> approvedOptionsMenuInput = {0,1,2,3};
   int diceMenuInput;
-  std::unordered_set<int> approvedDiceMenuInput = {0,1,2,3,4,5,6,7};
   int newMenuInput;
-  std::unordered_set<int> approvedNewMenuInput = {0,1,2,3};
   int charKeepInput;
-  std::unordered_set<int> approvedCharKeepInput = {0,1};
 
   //Generate a new seed at boot
   SEEDER.randomSeed();
 
-  //Makes a new folder in Characters for any added System
+  //Makes a new folder in Characters for any added Systems
   FolderOriginBRP();
   
   while(true) 

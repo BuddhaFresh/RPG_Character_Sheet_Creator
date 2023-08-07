@@ -13,6 +13,7 @@ void RandomSetUp::userSeed()
 {
   // Prompt for user to input their seed
   std::cout << "\nEnter seed\n";
+  //std::getline(std::cin >> std::ws, seedinput);
   std::cin >> seedinput;
 
   //Turn string into int

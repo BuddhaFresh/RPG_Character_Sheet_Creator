@@ -1,32 +1,33 @@
 ===========================================================
 			PERSONAL
 ===========================================================
-Name: Axel		Player: Forrest
+Name: Greg		Player: Woody
 Culture: Human		Gender: Male
 Handedness: Right-Handed	Height: Tall	Weight: Overweight
-Profession: Wizard		Wealth: Broke
+Profession: Computer Tech		Wealth: Broke
 Gods/Religion: Agnostic
 
-They have distintive Torso and SpeechHair on head.
-MOV: 10		Age: 21
+They have distintive Hair on head and Expression.
+MOV: 10		Age: 23
 ===========================================================
 			CHARACTERISTICS
 ===========================================================
-STR 13	Effort roll 65%			INT 14	Idea roll 70%
-CON 09	Stamina roll 45%		CHA 15	Charm roll 75%
-DEX 07	Agility roll 35%		POW 14	Luck roll 70%
-SIZ 17					Damage Bonus of +1D4
+STR 16	Effort roll 80%			INT 10	Idea roll 50%
+CON 05	Stamina roll 25%		CHA 08	Charm roll 40%
+DEX 16	Agility roll 80%		POW 10	Luck roll 50%
+EDU 14	Knowledge roll 70%	SIZ 14	Damage Bonus of +1D4
 ===========================================================
 			HIT POINTS
 ===========================================================
-HP: 13 with Major Would occuring at 6 HP
+HP: 9 with Major Would occuring at 4 HP
 ===========================================================
 			SKILLS
 ===========================================================
-Professional Skill Points Pool: 250
-Personal Skill Points Pool: 140
-COMMUNICATION			MENTAL			PHYSICAL			
-MANIPULATION			PERCEPTION			COMBAT			
+Professional Skill Points Pool: 280
+Personal Skill Points Pool: 100
+Appraise (15%)			0%
+COMMUNICATION (0%)			MENTAL (0%)			PHYSICAL (0%)			
+MANIPULATION (0%)			PERCEPTION (0%)			COMBAT (0%)			
 
 
-Seed: 1690472558
+Seed: 1691444983
